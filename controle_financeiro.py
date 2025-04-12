@@ -4,13 +4,15 @@ saidas = {}
 
 def cadastrar_usuario():
     nome = input("Digite o nome do usuário: ")
-    valor = float(input(f"Digite o valor de entrada para {nome}: "))
+    valor = input(f"Digite o valor de entrada para {nome}: ").replace (',', '.')
+    valor = float(valor)
     usuarios[nome] = valor
     print(f"Usuário {nome} cadastrado com entrada de R$ {valor:.2f}.\n")
 
 def registrar_saida():
     descricao = input("Digite a descrição da saída (ex: Água, Luz): ")
-    valor = float(input(f"Digite o valor da saída para {descricao}: "))
+    valor = input(f"Digite o valor da saída para {descricao}: ").replace (',', '.')
+    valor = float(valor)
     saidas[descricao] = valor
     print(f"Saída {descricao} registrada com valor de R$ {valor:.2f}.\n")
 
