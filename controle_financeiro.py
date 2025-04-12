@@ -61,13 +61,24 @@ def calcular_saldo():
     print(f"Total de Saídas: R$ {total_saidas:.2f}")
     print(f"Saldo Final: R$ {saldo_final:.2f}\n")
 
+def listar_dados():
+    print("\n--- Entradas ---")
+    for usuario, valor in usuarios.items():
+        print(f"{usuario}: R$ {valor:.2f}")
+
+    print("\n--- Saídas ---")
+    for descricao, valor in saidas.items():
+        print(f"{descricao}: R$ {valor:.2f}")
+    print()
+
 def menu():
     carregar_dados()  # Carregar dados ao iniciar o programa
     while True:
         print("1. Cadastrar Usuário e Entrada")
         print("2. Registrar Saída")
         print("3. Calcular Saldo Final")
-        print("4. Sair")
+        print("4. Listar Dados")
+        print("5. Sair")
         opcao = input("Escolha uma opção: ")
 
         if opcao == "1":
@@ -77,6 +88,8 @@ def menu():
         elif opcao == "3":
             calcular_saldo()
         elif opcao == "4":
+            listar_dados()
+        elif opcao == "5":
             print("Saindo do programa...")
             break
         else:
