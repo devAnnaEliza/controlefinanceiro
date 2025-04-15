@@ -2,6 +2,7 @@ import csv
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
+import openpyxl
 
 # Dicionários para armazenar dados
 usuarios = {}
@@ -27,15 +28,38 @@ def carregar_dados():
             reader = csv.reader(file)
             next(reader)  # Pular cabeçalho
             for row in reader:
-                usuarios[row[0]] = (float(row[1]), row[2])
+                if len(row) >= 3:  # Verifica se a linha tem pelo menos 3 colunas
+                    usuarios[row[0]] = (float(row[1]), row[2])
 
         with open('saidas.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             next(reader)  # Pular cabeçalho
             for row in reader:
-                saidas[row[0]] = (float(row[1]), row[2])
+                if len(row) >= 3:  # Verifica se a linha tem pelo menos 3 colunas
+                    saidas[row[0]] = (float(row[1]), row[2])
     except FileNotFoundError:
         print("Arquivos de dados não encontrados. Iniciando com dados vazios.")
+
+def exportar_para_excel():
+    workbook = openpyxl.Workbook()
+    sheet_entradas = workbook.active
+    sheet_entradas.title = "Entradas"
+    sheet_saidas = workbook.create_sheet(title="Saídas")
+
+    # Adicionar cabeçalhos
+    sheet_entradas.append(["Usuário", "Valor", "Data"])
+    sheet_saidas.append(["Descrição", "Valor", "Data"])
+
+    # Adicionar dados
+    for usuario, (valor, data) in usuarios.items():
+        sheet_entradas.append([usuario, valor, data])
+
+    for descricao, (valor, data) in saidas.items():
+        sheet_saidas.append([descricao, valor, data])
+
+    # Salvar arquivo
+    workbook.save("controle_financeiro.xlsx")
+    messagebox.showinfo("Exportação", "Dados exportados para 'controle_financeiro.xlsx'.")
 
 # Funções para o front-end
 def cadastrar_usuario():
@@ -140,6 +164,7 @@ entry_saida_valor.grid(row=1, column=1, padx=5, pady=5)
 btn_registrar_saida = tk.Button(frame_saidas, text="Registrar Saída", command=registrar_saida)
 btn_registrar_saida.grid(row=2, column=0, columnspan=2, pady=10)
 
+
 # Seção de Listagem por Mês
 frame_mes = tk.Frame(root)
 frame_mes.pack(pady=10)
@@ -157,6 +182,9 @@ frame_acoes.pack(pady=10)
 
 btn_calcular_saldo = tk.Button(frame_acoes, text="Calcular Saldo", command=calcular_saldo)
 btn_calcular_saldo.pack(side=tk.LEFT, padx=10)
+
+btn_exportar = tk.Button(frame_acoes, text="Exportar para Excel", command=exportar_para_excel)
+btn_exportar.pack(side=tk.LEFT, padx=10)
 
 # Iniciar o loop da interface gráfica
 root.mainloop()
