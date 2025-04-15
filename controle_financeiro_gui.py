@@ -1,8 +1,8 @@
 import csv
 import tkinter as tk
+import openpyxl
 from tkinter import messagebox
 from datetime import datetime
-import openpyxl
 from dados import salvar_dados, carregar_dados, exportar_para_excel, usuarios, saidas
 
 # Funções para o front-end
