@@ -28,14 +28,14 @@ def carregar_dados():
             reader = csv.reader(file)
             next(reader)  # Pular cabeçalho
             for row in reader:
-                if len(row) >= 3:  # Verifica se a linha tem pelo menos 3 colunas
+                if len(row) >= 3 and all(row):  # Verifica se a linha tem pelo menos 3 colunas
                     usuarios[row[0]] = (float(row[1]), row[2])
 
         with open('saidas.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             next(reader)  # Pular cabeçalho
             for row in reader:
-                if len(row) >= 3:  # Verifica se a linha tem pelo menos 3 colunas
+                if len(row) >= 3 and all(row):  # Verifica se a linha tem pelo menos 3 colunas
                     saidas[row[0]] = (float(row[1]), row[2])
     except FileNotFoundError:
         print("Arquivos de dados não encontrados. Iniciando com dados vazios.")
