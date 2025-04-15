@@ -3,63 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
 import openpyxl
-
-# Dicionários para armazenar dados
-usuarios = {}
-saidas = {}
-
-# Funções para salvar e carregar dados
-def salvar_dados():
-    with open('entradas.csv', 'w', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Usuário', 'Valor', 'Data'])
-        for usuario, (valor, data) in usuarios.items():
-            writer.writerow([usuario, valor, data])
-
-    with open('saidas.csv', 'w', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Descrição', 'Valor', 'Data'])
-        for descricao, (valor, data) in saidas.items():
-            writer.writerow([descricao, valor, data])
-
-def carregar_dados():
-    try:
-        with open('entradas.csv', 'r', encoding='utf-8') as file:
-            reader = csv.reader(file)
-            next(reader)  # Pular cabeçalho
-            for row in reader:
-                if len(row) >= 3 and all(row):  # Verifica se a linha tem pelo menos 3 colunas
-                    usuarios[row[0]] = (float(row[1]), row[2])
-
-        with open('saidas.csv', 'r', encoding='utf-8') as file:
-            reader = csv.reader(file)
-            next(reader)  # Pular cabeçalho
-            for row in reader:
-                if len(row) >= 3 and all(row):  # Verifica se a linha tem pelo menos 3 colunas
-                    saidas[row[0]] = (float(row[1]), row[2])
-    except FileNotFoundError:
-        print("Arquivos de dados não encontrados. Iniciando com dados vazios.")
-
-def exportar_para_excel():
-    workbook = openpyxl.Workbook()
-    sheet_entradas = workbook.active
-    sheet_entradas.title = "Entradas"
-    sheet_saidas = workbook.create_sheet(title="Saídas")
-
-    # Adicionar cabeçalhos
-    sheet_entradas.append(["Usuário", "Valor", "Data"])
-    sheet_saidas.append(["Descrição", "Valor", "Data"])
-
-    # Adicionar dados
-    for usuario, (valor, data) in usuarios.items():
-        sheet_entradas.append([usuario, valor, data])
-
-    for descricao, (valor, data) in saidas.items():
-        sheet_saidas.append([descricao, valor, data])
-
-    # Salvar arquivo
-    workbook.save("controle_financeiro.xlsx")
-    messagebox.showinfo("Exportação", "Dados exportados para 'controle_financeiro.xlsx'.")
+from dados import salvar_dados, carregar_dados, exportar_para_excel, usuarios, saidas
 
 # Funções para o front-end
 def cadastrar_usuario():
