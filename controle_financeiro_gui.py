@@ -6,12 +6,13 @@ from dados import salvar_dados, carregar_dados, usuarios, saidas
 
 # Funções para o front-end
 def cadastrar_usuario():
-    nome = entry_nome.get()
-    valor = entry_valor.get().replace(',', '.')
+    nome = entry_nome.get().strip()
+    valor = entry_valor.get().replace(',', '.').strip()
     data = datetime.now().strftime('%Y-%m')  # Captura o mês e ano atual
     if nome and valor:
         try:
-            usuarios[nome] = (float(valor), data)
+            valor = float(valor)
+            usuarios[nome] = (valor, data)
             salvar_dados()
             entry_nome.delete(0, tk.END)
             entry_valor.delete(0, tk.END)
@@ -22,12 +23,13 @@ def cadastrar_usuario():
 
 
 def registrar_saida():
-    descricao = entry_descricao.get()
-    valor = entry_saida_valor.get().replace(',', '.')
+    descricao = entry_descricao.get().strip()
+    valor = entry_saida_valor.get().replace(',', '.').strip()
     data = datetime.now().strftime('%Y-%m')  # Captura o mês e ano atual
     if descricao and valor:
         try:
-            saidas[descricao] = (float(valor), data)
+            valor = float(valor)
+            saidas[descricao] = (valor, data)
             salvar_dados()
             entry_descricao.delete(0, tk.END)
             entry_saida_valor.delete(0, tk.END)
@@ -38,7 +40,7 @@ def registrar_saida():
 
 
 def exibir_entradas_por_mes():
-    mes = entry_mes.get()
+    mes = entry_mes.get().strip()
     if not mes:
         messagebox.showerror("Erro", "Por favor, insira o mês no formato YYYY-MM.")
         return
@@ -62,7 +64,7 @@ def exibir_entradas_por_mes():
 
 
 def exibir_saidas_por_mes():
-    mes = entry_mes.get()
+    mes = entry_mes.get().strip()
     if not mes:
         messagebox.showerror("Erro", "Por favor, insira o mês no formato YYYY-MM.")
         return
@@ -86,22 +88,25 @@ def exibir_saidas_por_mes():
 
 
 def exibir_saldo_por_mes():
-    mes = entry_mes.get()
-    if not mes:
+    mes = entry_mes.get().strip()
+    if not mes or len(mes) != 7 or not mes[:4].isdigit() or not mes[5:].isdigit() or mes[4] != '-':
         messagebox.showerror("Erro", "Por favor, insira o mês no formato YYYY-MM.")
         return
 
     saldo_window = tk.Toplevel(root)
     saldo_window.title(f"Saldo - {mes}")
 
-    total_entradas = sum(valor for usuario, (valor, data) in usuarios.items() if data.startswith(mes))
-    total_saidas = sum(valor for descricao, (valor, data) in saidas.items() if data.startswith(mes))
-    saldo_final = total_entradas - total_saidas
+    try:
+        total_entradas = sum(valor for usuario, (valor, data) in usuarios.items() if data.startswith(mes))
+        total_saidas = sum(valor for descricao, (valor, data) in saidas.items() if data.startswith(mes))
+        saldo_final = total_entradas - total_saidas
 
-    tk.Label(saldo_window, text=f"Total de Entradas: R$ {total_entradas:.2f}\n"
-                                f"Total de Saídas: R$ {total_saidas:.2f}\n"
-                                f"Saldo Final: R$ {saldo_final:.2f}",
-             font=("Arial", 12, "bold")).pack(pady=20)
+        tk.Label(saldo_window, text=f"Total de Entradas: R$ {total_entradas:.2f}\n"
+                                    f"Total de Saídas: R$ {total_saidas:.2f}\n"
+                                    f"Saldo Final: R$ {saldo_final:.2f}",
+                 font=("Arial", 12, "bold")).pack(pady=20)
+    except Exception as e:
+        messagebox.showerror("Erro", f"Ocorreu um erro ao calcular o saldo: {e}")
 
 
 # Interface gráfica com Tkinter

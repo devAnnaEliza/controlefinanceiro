@@ -21,19 +21,21 @@ def carregar_dados():
     try:
         with open('entradas.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
-            next(reader)
+            next(reader)  # Pular cabeçalho
             for row in reader:
-                if len(row) >= 3 and all(row):
+                if len(row) >= 3 and all(row):  # Verifica se a linha tem pelo menos 3 colunas e não está vazia
                     usuarios[row[0]] = (float(row[1]), row[2])
 
         with open('saidas.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
-            next(reader)
+            next(reader)  # Pular cabeçalho
             for row in reader:
-                if len(row) >= 3 and all(row):
+                if len(row) >= 3 and all(row):  # Verifica se a linha tem pelo menos 3 colunas e não está vazia
                     saidas[row[0]] = (float(row[1]), row[2])
     except FileNotFoundError:
-        print("Arquivos de dados não encontrados. Criando novos arquivos.")
+        print("Arquivos de dados não encontrados. Iniciando com dados vazios.")
+    except Exception as e:
+        print(f"Erro ao carregar os dados: {e}")
 
 def exportar_para_excel():
     workbook = openpyxl.Workbook()
