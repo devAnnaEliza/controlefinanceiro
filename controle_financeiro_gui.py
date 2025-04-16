@@ -1,21 +1,18 @@
-import csv
 import tkinter as tk
-import openpyxl
-import matplotlib.pyplot as plt
 from tkinter import ttk, messagebox
 from datetime import datetime
-from dados import salvar_dados, carregar_dados, exportar_para_excel, usuarios, saidas
+from dados import salvar_dados, carregar_dados, usuarios, saidas
 
+
+# Funções para o front-end
 def cadastrar_usuario():
     nome = entry_nome.get()
     valor = entry_valor.get().replace(',', '.')
     data = datetime.now().strftime('%Y-%m')  # Captura o mês e ano atual
     if nome and valor:
         try:
-            valor = float(valor)
-            usuarios[nome] = (valor, data)
+            usuarios[nome] = (float(valor), data)
             salvar_dados()
-            messagebox.showinfo("Sucesso", f"Usuário {nome} cadastrado com entrada de R$ {valor:.2f}.")
             entry_nome.delete(0, tk.END)
             entry_valor.delete(0, tk.END)
         except ValueError:
@@ -30,10 +27,8 @@ def registrar_saida():
     data = datetime.now().strftime('%Y-%m')  # Captura o mês e ano atual
     if descricao and valor:
         try:
-            valor = float(valor)
-            saidas[descricao] = (valor, data)
+            saidas[descricao] = (float(valor), data)
             salvar_dados()
-            messagebox.showinfo("Sucesso", f"Saída {descricao} registrada com valor de R$ {valor:.2f}.")
             entry_descricao.delete(0, tk.END)
             entry_saida_valor.delete(0, tk.END)
         except ValueError:
@@ -48,27 +43,22 @@ def exibir_entradas_por_mes():
         messagebox.showerror("Erro", "Por favor, insira o mês no formato YYYY-MM.")
         return
 
-    # Janela para exibir as entradas
     entradas_window = tk.Toplevel(root)
     entradas_window.title(f"Entradas - {mes}")
 
-    # Criação do Treeview
     tree = ttk.Treeview(entradas_window, columns=("Usuário", "Valor", "Data"), show="headings")
     tree.heading("Usuário", text="Usuário")
     tree.heading("Valor", text="Valor (R$)")
     tree.heading("Data", text="Data")
     tree.pack(fill=tk.BOTH, expand=True)
 
-    # Adicionar entradas na tabela
     total_entradas = 0
     for usuario, (valor, data) in usuarios.items():
-        if data.startswith(mes):  # Filtrar pelo mês
+        if data.startswith(mes):
             tree.insert("", tk.END, values=(usuario, f"{valor:.2f}", data))
             total_entradas += valor
 
-    # Exibir total de entradas
-    total_label = tk.Label(entradas_window, text=f"Total de Entradas: R$ {total_entradas:.2f}", font=("Arial", 12, "bold"))
-    total_label.pack(pady=10)
+    tk.Label(entradas_window, text=f"Total de Entradas: R$ {total_entradas:.2f}", font=("Arial", 12, "bold")).pack(pady=10)
 
 
 def exibir_saidas_por_mes():
@@ -77,27 +67,22 @@ def exibir_saidas_por_mes():
         messagebox.showerror("Erro", "Por favor, insira o mês no formato YYYY-MM.")
         return
 
-    # Janela para exibir as saídas
     saidas_window = tk.Toplevel(root)
     saidas_window.title(f"Saídas - {mes}")
 
-    # Criação do Treeview
     tree = ttk.Treeview(saidas_window, columns=("Descrição", "Valor", "Data"), show="headings")
     tree.heading("Descrição", text="Descrição")
     tree.heading("Valor", text="Valor (R$)")
     tree.heading("Data", text="Data")
     tree.pack(fill=tk.BOTH, expand=True)
 
-    # Adicionar saídas na tabela
     total_saidas = 0
     for descricao, (valor, data) in saidas.items():
-        if data.startswith(mes):  # Filtrar pelo mês
+        if data.startswith(mes):
             tree.insert("", tk.END, values=(descricao, f"{valor:.2f}", data))
             total_saidas += valor
 
-    # Exibir total de saídas
-    total_label = tk.Label(saidas_window, text=f"Total de Saídas: R$ {total_saidas:.2f}", font=("Arial", 12, "bold"))
-    total_label.pack(pady=10)
+    tk.Label(saidas_window, text=f"Total de Saídas: R$ {total_saidas:.2f}", font=("Arial", 12, "bold")).pack(pady=10)
 
 
 def exibir_saldo_por_mes():
@@ -106,21 +91,17 @@ def exibir_saldo_por_mes():
         messagebox.showerror("Erro", "Por favor, insira o mês no formato YYYY-MM.")
         return
 
-    # Janela para exibir o saldo
     saldo_window = tk.Toplevel(root)
     saldo_window.title(f"Saldo - {mes}")
 
-    # Calcular total de entradas e saídas
     total_entradas = sum(valor for usuario, (valor, data) in usuarios.items() if data.startswith(mes))
     total_saidas = sum(valor for descricao, (valor, data) in saidas.items() if data.startswith(mes))
     saldo_final = total_entradas - total_saidas
 
-    # Exibir saldo
-    saldo_label = tk.Label(saldo_window, text=f"Total de Entradas: R$ {total_entradas:.2f}\n"
-                                              f"Total de Saídas: R$ {total_saidas:.2f}\n"
-                                              f"Saldo Final: R$ {saldo_final:.2f}",
-                           font=("Arial", 12, "bold"))
-    saldo_label.pack(pady=20)
+    tk.Label(saldo_window, text=f"Total de Entradas: R$ {total_entradas:.2f}\n"
+                                f"Total de Saídas: R$ {total_saidas:.2f}\n"
+                                f"Saldo Final: R$ {saldo_final:.2f}",
+             font=("Arial", 12, "bold")).pack(pady=20)
 
 
 # Interface gráfica com Tkinter
@@ -141,8 +122,7 @@ tk.Label(frame_cadastro, text="Valor de Entrada:").grid(row=1, column=0, padx=5,
 entry_valor = tk.Entry(frame_cadastro)
 entry_valor.grid(row=1, column=1, padx=5, pady=5)
 
-btn_cadastrar = tk.Button(frame_cadastro, text="Cadastrar Usuário", command=cadastrar_usuario)
-btn_cadastrar.grid(row=2, column=0, columnspan=2, pady=10)
+tk.Button(frame_cadastro, text="Cadastrar Usuário", command=cadastrar_usuario).grid(row=2, column=0, columnspan=2, pady=10)
 
 # Seção de Registro de Saídas
 frame_saidas = tk.Frame(root)
@@ -156,8 +136,7 @@ tk.Label(frame_saidas, text="Valor da Saída:").grid(row=1, column=0, padx=5, pa
 entry_saida_valor = tk.Entry(frame_saidas)
 entry_saida_valor.grid(row=1, column=1, padx=5, pady=5)
 
-btn_registrar_saida = tk.Button(frame_saidas, text="Registrar Saída", command=registrar_saida)
-btn_registrar_saida.grid(row=2, column=0, columnspan=2, pady=10)
+tk.Button(frame_saidas, text="Registrar Saída", command=registrar_saida).grid(row=2, column=0, columnspan=2, pady=10)
 
 # Campo para selecionar o mês
 frame_mes = tk.Frame(root)
@@ -168,14 +147,9 @@ entry_mes = tk.Entry(frame_mes)
 entry_mes.grid(row=0, column=1, padx=5, pady=5)
 
 # Botões para exibir entradas, saídas e saldo
-btn_entradas = tk.Button(frame_mes, text="Exibir Entradas", command=exibir_entradas_por_mes)
-btn_entradas.grid(row=1, column=0, padx=5, pady=5)
-
-btn_saidas = tk.Button(frame_mes, text="Exibir Saídas", command=exibir_saidas_por_mes)
-btn_saidas.grid(row=1, column=1, padx=5, pady=5)
-
-btn_saldo = tk.Button(frame_mes, text="Exibir Saldo", command=exibir_saldo_por_mes)
-btn_saldo.grid(row=1, column=2, padx=5, pady=5)
+tk.Button(frame_mes, text="Exibir Entradas", command=exibir_entradas_por_mes).grid(row=1, column=0, padx=5, pady=5)
+tk.Button(frame_mes, text="Exibir Saídas", command=exibir_saidas_por_mes).grid(row=1, column=1, padx=5, pady=5)
+tk.Button(frame_mes, text="Exibir Saldo", command=exibir_saldo_por_mes).grid(row=1, column=2, padx=5, pady=5)
 
 # Iniciar o loop da interface gráfica
 root.mainloop()
