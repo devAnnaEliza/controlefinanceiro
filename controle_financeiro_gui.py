@@ -1,6 +1,7 @@
 import csv
 import tkinter as tk
 import openpyxl
+import matplotlib.pyplot as plt
 from tkinter import messagebox
 from datetime import datetime
 from dados import salvar_dados, carregar_dados, exportar_para_excel, usuarios, saidas
@@ -72,6 +73,15 @@ def listar_dados_por_mes():
 
     messagebox.showinfo(f"Dados do Mês {mes}", dados)
 
+def exibir_grafico():
+    categorias = ["Entradas", "Saídas"]
+    valores = [sum(valor for valor, _ in usuarios.values()), sum(valor for valor, _ in saidas.values())]
+
+    plt.bar(categorias, valores, color=['green', 'red'])
+    plt.title("Entradas vs Saídas")
+    plt.ylabel("Valor (R$)")
+    plt.show()
+
 # Interface gráfica com Tkinter
 carregar_dados()
 
@@ -108,7 +118,6 @@ entry_saida_valor.grid(row=1, column=1, padx=5, pady=5)
 btn_registrar_saida = tk.Button(frame_saidas, text="Registrar Saída", command=registrar_saida)
 btn_registrar_saida.grid(row=2, column=0, columnspan=2, pady=10)
 
-
 # Seção de Listagem por Mês
 frame_mes = tk.Frame(root)
 frame_mes.pack(pady=10)
@@ -129,6 +138,11 @@ btn_calcular_saldo.pack(side=tk.LEFT, padx=10)
 
 btn_exportar = tk.Button(frame_acoes, text="Exportar para Excel", command=exportar_para_excel)
 btn_exportar.pack(side=tk.LEFT, padx=10)
+
+# botão do gráfico
+
+btn_grafico = tk.Button(frame_acoes, text="Exibir Gráfico", command=exibir_grafico)
+btn_grafico.pack(side=tk.LEFT, padx=10)
 
 # Iniciar o loop da interface gráfica
 root.mainloop()
