@@ -19,4 +19,4 @@ Este projeto é um aplicação simples de controle financeiro desenvolvido como 
 - Tkinter 
 - Pandas
 
-<img width=620px alt="app de controle financeiro" src="controle_financeiro_python.png">
+<img alt="app de controle financeiro" src="controle_financeiro_python.png">
