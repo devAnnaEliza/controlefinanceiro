@@ -1,6 +1,46 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+import pandas as pd  # Biblioteca para manipular planilhas
 from dados import salvar_dados, carregar_dados, usuarios, saidas
+
+
+# Função para exportar os dados para Excel
+def exportar_para_excel():
+    try:
+        # Criar DataFrame para entradas
+        entradas_df = pd.DataFrame([
+            {"Tipo": "Entrada", "Descrição/Usuário": usuario, "Valor (R$)": valor, "Data": data}
+            for usuario, (valor, data) in usuarios.items()
+        ])
+
+        # Criar DataFrame para saídas
+        saidas_df = pd.DataFrame([
+            {"Tipo": "Saída", "Descrição/Usuário": descricao, "Valor (R$)": valor, "Data": data}
+            for descricao, (valor, data) in saidas.items()
+        ])
+
+        # Concatenar entradas e saídas
+        dados_df = pd.concat([entradas_df, saidas_df], ignore_index=True)
+
+        # Calcular saldo final
+        total_entradas = sum(valor for _, (valor, _) in usuarios.items())
+        total_saidas = sum(valor for _, (valor, _) in saidas.items())
+        saldo_final = total_entradas - total_saidas
+
+        # Adicionar saldo final ao DataFrame
+        saldo_df = pd.DataFrame([{
+            "Tipo": "Saldo Final",
+            "Descrição/Usuário": "",
+            "Valor (R$)": saldo_final,
+            "Data": ""
+        }])
+        dados_df = pd.concat([dados_df, saldo_df], ignore_index=True)
+
+        # Exportar para Excel
+        dados_df.to_excel("controle_financeiro.xlsx", index=False, engine="openpyxl")
+        messagebox.showinfo("Sucesso", "Os dados foram exportados para 'controle_financeiro.xlsx'.")
+    except Exception as e:
+        messagebox.showerror("Erro", f"Erro ao exportar os dados: {e}")
 
 
 # Funções para o front-end
@@ -178,13 +218,14 @@ combo_saida_ano.grid(row=3, column=1, padx=5, pady=5)
 
 tk.Button(frame_saidas, text="Registrar Saída", command=registrar_saida).grid(row=4, column=0, columnspan=2, pady=10)
 
-# Botões para exibir entradas, saídas e saldo
+# Botões para exibir entradas, saídas, saldo e exportar para Excel
 frame_mes = tk.Frame(root)
 frame_mes.pack(pady=10)
 
 tk.Button(frame_mes, text="Exibir Entradas", command=exibir_entradas_por_mes).grid(row=0, column=0, padx=5, pady=5)
 tk.Button(frame_mes, text="Exibir Saídas", command=exibir_saidas_por_mes).grid(row=0, column=1, padx=5, pady=5)
 tk.Button(frame_mes, text="Exibir Saldo", command=exibir_saldo_por_mes).grid(row=0, column=2, padx=5, pady=5)
+tk.Button(frame_mes, text="Exportar para Excel", command=exportar_para_excel).grid(row=1, column=0, columnspan=3, pady=10)
 
 # Iniciar o loop da interface gráfica
 root.mainloop()
