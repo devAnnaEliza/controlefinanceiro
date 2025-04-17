@@ -1,7 +1,7 @@
 ## Programa para Controle Financeiro 📈
 **`Projeto Pessoal`** 
 
-Este projeto é um aplicação simples de controle financeiro desenvolvida como uma amostra para a utilização em organizações sem fins lucrativos. 
+Este projeto é um aplicação simples de controle financeiro desenvolvida como uma amostra. 
 
 🧰 Funcionalidades
 
@@ -15,6 +15,6 @@ Este projeto é um aplicação simples de controle financeiro desenvolvida como 
 
 - Python
 - Tkinter 
-- Matplotlib
+- Pandas
 
 <img width=620px alt="app" src="./img/eventotela1.png">                                      <img width=620px alt="app" src="./img/eventotela2.png">          <img width=620px alt="app" src="./img/inscricaotela1.png">
