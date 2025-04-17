@@ -1,7 +1,9 @@
 ## Programa para Controle Financeiro 📈
 **`Projeto Pessoal`** 
 
-Este projeto é um aplicação simples de controle financeiro desenvolvida como uma amostra. 
+Este projeto é um aplicação simples de controle financeiro desenvolvido como uma amostra para uma pequena empresa. Ele permite gerenciar entradas e saídas financeiras de forma simples, além de exportar os dados para uma planilha Excel. O objetivo é oferecer uma solução prática para acompanhar movimentações financeiras e visualizar o saldo final tanto para quem tem mais facilidade na utilização de programa, quanto para usuários mais tradicionais que preferem visualizar o balanço das finanças através do Excel.
+
+*Disponibilizado como arquivo executável (.exe)
 
 🧰 Funcionalidades
 
@@ -17,4 +19,4 @@ Este projeto é um aplicação simples de controle financeiro desenvolvida como 
 - Tkinter 
 - Pandas
 
-<img width=620px alt="app" src="./img/eventotela1.png">                                      <img width=620px alt="app" src="./img/eventotela2.png">          <img width=620px alt="app" src="./img/inscricaotela1.png">
+<img width=620px alt="app de controle financeiro" src="controle_financeiro_python.png">
