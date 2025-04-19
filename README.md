@@ -7,11 +7,11 @@ Este projeto é a amostra de uma aplicação simples de controle financeiro dese
 
 🧰 Funcionalidades
 
-- Adicionar entradas e saídas
-- Visualização de saldo
-- Listar movimentações por data
-- Exportação de dados para uma planilha Excel
-- Gráficos para visualização de entradas e saídas
+- Adicionar entradas e saídas;
+- Visualização de saldo;
+- Listar movimentações por data;
+- Exportação de dados para uma planilha Excel;
+- Gráficos para visualização de entradas e saídas.
 
 🛠️ Tecnologias e Bibliotecas
 
