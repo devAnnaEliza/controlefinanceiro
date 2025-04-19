@@ -1,7 +1,7 @@
 ## Programa para Controle Financeiro 📈
 **`Projeto Pessoal`** 
 
-Este projeto é um aplicação simples de controle financeiro desenvolvido como uma amostra para uma pequena empresa. Ele permite gerenciar entradas e saídas financeiras de forma simples, além de exportar os dados para uma planilha Excel. O objetivo é oferecer uma solução prática para acompanhar movimentações financeiras e visualizar o saldo final tanto para quem tem mais facilidade na utilização de programa, quanto para usuários mais tradicionais que preferem visualizar o balanço das finanças através do Excel.
+Este projeto é a amostra de uma aplicação simples de controle financeiro desenvolvido para uma pequena empresa. Ele permite gerenciar entradas e saídas financeiras de forma simples, além de exportar os dados para uma planilha Excel. O objetivo é oferecer uma solução prática para acompanhar movimentações financeiras e visualizar o saldo final, tanto para quem tem mais facilidade na utilização de programas, quanto para usuários mais tradicionais, que preferem visualizar o balanço das financeiro através do Excel.
 
 **Também disponibilizado como arquivo executável (.exe)**
 
