@@ -3,7 +3,7 @@
 
 Este projeto é um aplicação simples de controle financeiro desenvolvido como uma amostra para uma pequena empresa. Ele permite gerenciar entradas e saídas financeiras de forma simples, além de exportar os dados para uma planilha Excel. O objetivo é oferecer uma solução prática para acompanhar movimentações financeiras e visualizar o saldo final tanto para quem tem mais facilidade na utilização de programa, quanto para usuários mais tradicionais que preferem visualizar o balanço das finanças através do Excel.
 
-*Disponibilizado como arquivo executável (.exe)
+**Também disponibilizado como arquivo executável (.exe)**
 
 🧰 Funcionalidades
 
@@ -19,4 +19,4 @@ Este projeto é um aplicação simples de controle financeiro desenvolvido como 
 - Tkinter 
 - Pandas
 
-<img alt="app de controle financeiro" src="controle_financeiro_python.png">
+<img alt="app de controle financeiro" src="controle_financeiro_python.png"> 
